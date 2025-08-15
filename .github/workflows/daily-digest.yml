@@ -1,0 +1,35 @@
+name: Daily Digest (Bitrix24)
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    # GitHub Actions работает по UTC.
+    # Алматы сейчас UTC+5 → 09:00 по Алматы = 04:00 UTC.
+    - cron: '0 4 * * 1-5'
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install deps
+        run: npm ci || npm i
+
+      - name: Run digest
+        env:
+          BITRIX_BASE_URL: ${{ secrets.BITRIX_BASE_URL }}
+          BITRIX_WEBHOOK: ${{ secrets.BITRIX_WEBHOOK }}
+          TZ: ${{ secrets.TZ }}
+          CRON_SCHEDULE: '0 9 * * 1-5'           # внутри кода не используется при --now, но пусть будет
+          TASKS_EXCLUDE_COMPLETED: 'true'
+          DAY_SPAN_HOURS: '24'
+          CALENDAR_CHECK_PERMS: 'true'
+          # ONLY_USER_ID: '41'                   # можно включить для теста, потом убрать
+        run: node index.js --now
