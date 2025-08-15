@@ -2,16 +2,16 @@
   "name": "b24-daily-digest",
   "version": "1.0.0",
   "type": "module",
-  "private": true,
+  "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "node index.js"
+    "now": "node index.js --now"
   },
   "dependencies": {
-    "axios": "^1.11.0",
-    "dayjs": "^1.11.13",
-    "dotenv": "^16.6.1",
+    "axios": "^1.7.0",
+    "dayjs": "^1.11.11",
     "node-cron": "^3.0.3",
-    "p-limit": "^5.0.0"
+    "p-limit": "^5.0.0",
+    "dotenv": "^16.4.5"
   }
 }
