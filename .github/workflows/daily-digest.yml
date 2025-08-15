@@ -27,9 +27,9 @@ jobs:
           BITRIX_BASE_URL: ${{ secrets.BITRIX_BASE_URL }}
           BITRIX_WEBHOOK: ${{ secrets.BITRIX_WEBHOOK }}
           TZ: ${{ secrets.TZ }}
-          CRON_SCHEDULE: '0 9 * * 1-5'           # внутри кода не используется при --now, но пусть будет
+          CRON_SCHEDULE: '0 9 * * 1-5'
           TASKS_EXCLUDE_COMPLETED: 'true'
           DAY_SPAN_HOURS: '24'
           CALENDAR_CHECK_PERMS: 'true'
-          # ONLY_USER_ID: '41'                   # можно включить для теста, потом убрать
+          # ONLY_USER_ID: ${{ secrets.ONLY_USER_ID }}   # включай для теста, потом убери
         run: node index.js --now
